@@ -1,0 +1,32 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+	{% for post in posts %}
+		<div class="post">
+			<div class="date">
+				{{ post.published_date }}
+				<img src="{{ post.thumb.url }}"width="200px", height="200px">
+			</div>
+			
+
+			<h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h2>
+			<p>{{ post.text|linebreaksbr }}</p>
+			
+			
+			<p>Category-{{ post.category }}</p>
+			
+			{% for tag in tag %}
+				<a href="{% url 'tag_detail' tag.slug  %}">#{{ tag }}</a>
+			{% endfor %}
+
+
+
+			
+	        
+		</div>
+			
+
+	{% endfor %}
+{% endblock %}
+
+

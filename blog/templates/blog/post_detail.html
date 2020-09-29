@@ -1,0 +1,91 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+	<div class="post">
+		{% if post.published_date %}
+			<div class="date" style="font-size:20px;">
+				<p><b>Published Date & Time-{{ post.published_date }}</b></p>
+				<p><b>Author-{{ post.author }}</b></p>
+				
+				<img src="{{ post.image.url }}"width="800px", height="800px">
+			</div>
+		{% endif %}
+		{% if user.is_authenticated %}
+			<a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+		{% endif %}
+		<h2>{{ post.title }}</h2>
+		<p>{{ post.text|linebreaksbr }}</p>
+		<p><a href="{% url 'category_detail' pk=post.pk %}">category-{{ post.category }}</a></p>
+		
+		{% for tag in tag %}
+			<a href="{% url 'tag_detail' tag.slug  %}">#{{ tag }}</a>
+		{% endfor %}
+		
+		<form action="{% url 'like_post' post.pk %}" method="POST">
+			{% csrf_token %}
+
+		{% if user.is_authenticated %}
+			{% if liked %}
+				<button type="submit", name="post_id", value="{{post.id}}", class="btn btn-danger btn-sm">Unlike</button>
+			{% else %}
+				<button type="submit", name="post_id", value="{{post.id}}", class="btn btn-primary btn-sm">Like</button>
+			{% endif %}
+		{% else %}
+		Login to like....
+
+		{% endif %}
+				-{{ total_likes }}Likes
+			
+		</form>
+
+	<div class="card-body">
+        {% if new_comment %}
+        <div class="alert alert-success" role="alert">
+          Your comment is awaiting moderation
+        </div>
+        {% else %}
+        <h4>Leave a comment</h4>
+        <form method="post" style="margin-top: 1.3em;">
+          {{ comment_form.as_p }}
+          {% csrf_token %}
+          <button type="submit" class="btn btn-primary  btn-lg">Submit</button>
+        </form>
+        {% endif %}
+     </div>
+		
+		<div class="main-comment-section">
+			
+			{% for comment in comment %}
+			<blockquote class="blockquote">
+				<p class="mb-0">-{{ comment }}</p>
+			</blockquote>
+
+			
+			
+			
+		<div class="replied-comments container mt-2">
+			{% for reply in comment.replies.all %}
+				{{ reply }}<br>
+			{% endfor %}
+			<div class="form-group row">
+				<form method="post">
+					{% csrf_token %}
+					<input type="hidden" name="comment_id" value="{{ comment.id}}">
+					<p style="font-size:20px;"><b>Leave a Reply-</b></p>
+					{{ comment_form.as_p }}
+					{% if request.user.is_authenticated %}
+						<input type="submit" value="submit" class="btn btn-outline-success">
+					{% else %}
+						<input type="submit" value="submit" class="btn btn-outline-success" disabled>
+					{% endif %}
+				</form>
+			</div>
+		</div>
+
+		{% endfor %}
+	</div>
+		
+		
+		
+	</div>
+{% endblock %}

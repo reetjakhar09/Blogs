@@ -1,0 +1,14 @@
+{% block content %}
+
+
+
+<p style="font-size:50px;">Tag</p>-{{ tag.title }}<br>
+<p style="font-size:50px;">Text</p>-{{ tag.text }}<br>
+
+{% for post in posts %}
+
+<p style="font-size:50px;">{% if forloop.counter == 1 %}Posts{% endif %}</p>-{{ post }}		
+
+{% endfor %}
+		
+{% endblock %}

@@ -1,0 +1,19 @@
+
+
+{% block content %}
+
+
+
+<p style="font-size:50px;">Category</p>-{{ category.title }}<br>
+<p style="font-size:50px;">Text</p>-{{ category.text }}<br>
+
+{% for posts in posts %}
+
+	<p style="font-size:50px;">{% if forloop.counter == 1 %}Posts{% endif %}</p>-<a href="{% url 'post_detail' pk=post.pk %}">{{ posts }}</a>
+	
+
+{% endfor %}		
+
+
+		
+{% endblock %}

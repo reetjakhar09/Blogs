@@ -1,0 +1,10 @@
+{% block content %}
+	<h2>Edit profile</h2>
+	<form method="POST" class="post-form" enctype="multipart/form-data">
+		{% csrf_token %}
+		{{ form.as_p }}
+		{{ form_image.as_p }}
+		<button type="submit" class="save btn btn-default">Update</button>
+		
+	</form>
+{% endblock %}

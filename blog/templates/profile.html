@@ -1,0 +1,34 @@
+<html lang="en">
+<head>
+  <title>Profile</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+
+{% block head %}
+<title>Profile</title>
+{% endblock %}
+
+{% block body %}
+<div class= "container">
+	<h1>Profile</h1>
+	{% if imgg.image %}
+	<img src= "{{ imgg.image.url }}" class="rounded-circle" alt="User Image" width="200px", height="200px">
+	{% endif %}
+	<p>Username: {{ user.username }}</p>
+	<p>First_name: {{ user.first_name }}</p>
+	<p>Last_name: {{ user.last_name }}</p>
+	<p>Email: {{ user.email }}</p>	
+	<p><a href="{% url 'edit_profile' pk=user.pk %}">Edit Profile</a></p>
+	
+</div>
+{% endblock %}
+
+</body>
+</html>

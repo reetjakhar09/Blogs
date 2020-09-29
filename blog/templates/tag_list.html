@@ -1,0 +1,12 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+	<ul>
+		{% for tag in tag %}
+			<li><a href="{% url 'tag_detail' tag.slug  %}">{{ tag }}</a></li>
+		{% endfor %}
+		
+	</ul>
+{% endblock %}
+
+
